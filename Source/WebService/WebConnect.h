@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "Engine/GameInstance.h"
-#include "ABGameInstance.generated.h"
+#include "UObject/NoExportTypes.h"
+#include "WebConnect.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARENABATTLE_API UABGameInstance : public UGameInstance
+class WEBSERVICE_API UWebConnect : public UObject
 {
 	GENERATED_BODY()
 	
