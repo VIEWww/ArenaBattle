@@ -19,7 +19,10 @@ void UABGameInstance::Init()
 	// 게임 플레이 런타임 시에 호출.
 	Super::Init();
 
+	// 오브젝트 생성 후 "자기 자신에게 어태치"
 	WebConnect2 = NewObject<UWebConnect>(this);
+
+	AB_LOG(Warning, TEXT("Outer of NewObject : %s"), *WebConnect2->GetOuter()->GetClass()->GetFullName());
 
 	UClass* ClassInfo1 = WebConnect->GetClass();
 	UClass* ClassInfo2 = UWebConnect::StaticClass();
@@ -47,5 +50,24 @@ void UABGameInstance::Init()
 		{
 			WebConnect->ProcessEvent(Func1, NULL);
 		}
+	}
+
+	UWorld* CurrentWorld = GetWorld();
+
+	for (const auto& Entry : FActorRange(CurrentWorld))
+	{
+		AB_LOG(Warning, TEXT("Actor : %s"), *Entry->GetName());
+
+		TArray<UObject*> Components;
+		Entry->GetDefaultSubobjects(Components);
+		for (const auto& CEntry : Components)
+		{
+			AB_LOG(Warning, TEXT(" -- Components : %s"), *CEntry->GetName());
+		}
+	}
+
+	for (TActorIterator<AStaticMeshActor> It(CurrentWorld); It; ++It)
+	{
+		AB_LOG(Warning, TEXT("StaticMesh Actor : %s"), *It->GetName());
 	}
 }
